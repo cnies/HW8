@@ -184,7 +184,7 @@ public class MyParser{
 		//If there is a problem (token is not a number) throw an exception, because
 		//that should never ever happen
 		catch (Exception e){
-			throw new ParseException("Token at "+nextTokenIndex+" is not a number", 
+			throw new ParseException("Token at "+(nextTokenIndex-1)+" is not a number", 
 															nextTokenIndex);
 		}
 	}
