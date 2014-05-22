@@ -1,3 +1,10 @@
+/*
+CSE 12 Homework 8
+Christopher Nies and Hasan Abu-Amara
+A11393577 and
+Section B00 and Section B00
+May 22nd, 2014
+*/
 // AST.java
 // Classes for representing Unicalc Abstract Syntax Tree.
 // Original author: Chris Stone
