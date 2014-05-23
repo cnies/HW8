@@ -14,3 +14,10 @@ prerun: $(PRE_CLASSES)
 
 test: $(MAIN_CLASSES) $(TEST_CLASSES)
 	java -cp .:/junit-4.10.jar org.junit.runner.JUnitCore $(TEST_CLASSES)
+run: $(MAIN_CLASSES)
+	java Unicalc
+clean:
+	rm -f *.class
+testcompile: $(TEST_CLASSES)
+testpremade:
+	make -C UnicalcSolutionClassFiles/ test
