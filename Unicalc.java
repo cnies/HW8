@@ -1,10 +1,3 @@
-/*
-CSE 12 Homework 8
-Christopher Nies and Hasan Abu-Amara
-A11393577 and
-Section B00 and Section B00
-May 22nd, 2014
-*/
 // Unicalc.java
 // Original Author: Chris Stone, Harvey Mudd College
 // TODO: Fill in and modify the functions below where the comments
@@ -164,30 +157,21 @@ class Unicalc
   //    you understand how it works.    
   public AST V()
   {
-    // V -> D | D ~ D | W | ( L )
+    // V -> D | W | ( L )
         
     List<String> emp = Collections.<String>emptyList();  // an empty list
 
     String next = toks.peek();  
     
     if ( isNumber(next) ) {
-      // D | D ~ D
-      // NOTE: The ~ is for uncertainty, which will be an optional extension
-      // Ignore the ~ check for now since it's not in our grammar (but keeping it here
-      // doesn't hurt anything and allows you to add uncertainty later).
+      // D
       double d1 = D();
-      if ( "~".equals( toks.peek() ) ) {
-        toks.pop();
-        double d2 = D();
-        return new Value(new Quantity(d1, d2, emp, emp));
-      } else {
-        return new Value(new Quantity(d1, 0, emp, emp));
-      }
+      return new Value(new Quantity(d1, emp, emp));
       
     } else if ( isAlphabetic(next) ) {
       // W 
       String unitName = toks.pop();
-      return new Value(new Quantity(1.0, 0, Arrays.asList(unitName), emp));
+      return new Value(new Quantity(1.0, Arrays.asList(unitName), emp));
       
     } else if ( "(".equals(next) ) {
       // ( L )
