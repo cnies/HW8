@@ -20,6 +20,9 @@ run: $(MAIN_CLASSES)
 	java Unicalc
 clean:
 	rm -f *.class
-testcompile: $(TEST_CLASSES)
+testcompile: 
+	javac -cp /junit-4.10.jar:./UnicalcSolutionClassFiles/ QuantityTester.java;
+	javac -cp /junit-4.10.jar:./UnicalcSolutionClassFiles/ ASTTester.java;
+	javac -cp /junit-4.10.jar:./UnicalcSolutionClassFiles/ UnicalcTester.java;
 testpremade:
 	make -C UnicalcSolutionClassFiles/ test
