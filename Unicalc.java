@@ -61,38 +61,107 @@ class Unicalc
   {
     //  S -> def W L | L
 
-    return L();  // I don't think we should *always* do this...
+    AST l;
+    if("def".equals(toks.peek()))
+    {
+      toks.pop();
+      String newUnit = toks.pop();
+      l = L();
+      return new Define(newUnit, l);
+    }
+
+    return L();
   }
 
   public AST L()
   {
     // L -> # E | E
 
-    return E();  // I don't think we should *always* do this...
+    AST child;
+    if("#".equals(toks.peek()))
+    {
+      toks.pop();
+      child = E();
+      return new Normalize(child);
+    }
+
+    return E();
   }
 
   public AST E() 
   {
    //   E -> P + E | P - E | P
 
-   AST p = P();
+   AST left = P();
+
+   if(toks.isEmpty())
+   {
+     return left;
+   }
+
+
+   AST right;
+   if("+".equals(toks.peek()))
+   {
+     toks.pop();
+     right = E();
+     return new Sum(left, right);
+   }
+
+   if("-".equals(toks.peek()))
+   {
+     toks.pop();
+     right = E();
+     return new Difference(left, right);
+   }
+
+   return left;
+
+
+
    
-   return p;  // I don't think we should *always* do this...
   }
   
   public AST P()
   {
     //   P -> K * P | K / P | K
     
-    AST k = K();
-    
-    return k;  // I don't think we should *always* do this
+    AST left = K();
+
+    if(toks.isEmpty())
+    {
+      return left;
+    }
+
+    AST right;
+
+    if("*".equals(toks.peek()))
+    {
+      toks.pop();
+      right = P();
+      return new Product(left, right);
+    }
+
+    if("/".equals(toks.peek()))
+    {
+      toks.pop();
+      right = P();
+      return new Quotient(left, right);
+    }
+
+    return left;
+
   }
     
   public AST K()
   {
     // K -> - K | Q 
-    
+    if("-".equals(toks.peek()))
+    {
+      toks.pop();
+      return new Negation(K());
+    }
+
     return Q();  // I don't think we should *always* do this
   }
 
@@ -128,9 +197,23 @@ class Unicalc
   {
     // Q -> R | R Q 
     
-    AST r = R();
 
-    return r;  // I don't think I should *always* do this
+    AST left = R();
+
+    if(toks.isEmpty())
+    {
+       return left;
+    }
+
+    String nextChar = toks.peek();
+    if(!isAlphabetic(nextChar) && !isNumber(nextChar) && !"(".equals(nextChar))
+    {
+      return left;
+    }
+
+    AST right = Q();
+
+    return new Quotient(left, right);  // I don't think I should *always* do this
                //   (e.g., if I peek and the R is followed
                //    by a number, word, or left parenthesis,
                //    I should try to recurively grab at least
@@ -141,10 +224,23 @@ class Unicalc
   public AST R()
   {
     // R -> V | V ^ J
-    
-    AST v = V();
+    AST left = V();
 
-    return v;  // I don't think I should *always* do this
+    if (toks.isEmpty())
+    {
+       return left;
+    }
+
+    if (!"^".equals(toks.peek()))
+    {
+       return left;
+    }
+
+    toks.pop();
+
+    int power = J();
+
+    return new Power(left, power);
   }
 
   //  --------------------------------------------------
