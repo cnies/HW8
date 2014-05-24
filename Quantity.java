@@ -123,6 +123,7 @@ public class Quantity{
 			throw new IllegalArgumentException();
 		Quantity toReturn = new Quantity(this);
 		double newValue = this.quantity/toDiv.quantity;
+		toReturn.quantity = newValue;
 		for (String unit: toDiv.theUnits.keySet()){
 			toReturn.adjustExponentsBy(unit, -toDiv.theUnits.get(unit));
 		}

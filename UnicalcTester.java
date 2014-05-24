@@ -7,6 +7,19 @@
  */
 import junit.framework.TestCase;
 public class UnicalcTester extends TestCase{
+	private static final Tokenizer tok = new Tokenizer();
+	private String worksForR;
+	private String worksForQ;
+	private String worksForK;
+	private String worksForP;
+	private String worksForE;
+	private String worksForL;
+	private String worksForS;
+
+	protected void setUp(){
+		worksForR = "5m^2";
+		worksForQ = "(2^2)";
+	}
 
 	public void test(){
 	}
