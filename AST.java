@@ -52,7 +52,10 @@ class Product implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    Quantity leftQ, rightQ;
+    leftQ = left.eval(env);
+    rightQ = right.eval(env);
+    return leftQ.mul(rightQ);
   }  
   
   public String toString()
@@ -82,7 +85,10 @@ class Quotient implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    Quantity leftQ, rightQ;
+    leftQ = left.eval(env);
+    rightQ = right.eval(env);
+    return leftQ.div(rightQ);
   }  
   
   public String toString()
@@ -112,7 +118,9 @@ class Power implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely 
+    Quantity childQ;
+    childQ = child.eval(env);
+    return childQ.pow(exponent); 
   }
   
   public String toString()
@@ -142,7 +150,10 @@ class Sum implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    Quantity leftQ, rightQ;
+    leftQ = left.eval(env);
+    rightQ = right.eval(env);
+    return leftQ.add(rightQ);
   }  
   
   public String toString()
@@ -172,7 +183,10 @@ class Difference implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely 
+    Quantity leftQ, rightQ;
+    leftQ = left.eval(env);
+    rightQ = right.eval(env);
+    return leftQ.sub(rightQ);
   }  
 
   public String toString()
@@ -202,7 +216,9 @@ class Negation implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    Quantity childQ;
+    childQ = child.eval(env);
+    return childQ.negate();
   }
   
   public String toString()
@@ -229,7 +245,7 @@ class Value implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    return quant;
   }  
   
   public String toString()
@@ -257,7 +273,9 @@ class Normalize implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    Quantity childQ;
+    childQ = child.eval(env);
+    return childQ.normalize(env);
   }
   
   public String toString()
@@ -288,7 +306,9 @@ class Define implements AST
   
   public Quantity eval(Map<String,Quantity> env)
   {
-    return null; // Seems unlikely
+    Quantity def = defn.eval(env);
+    env.put(unitName, def);
+    return def;
   }
   
   public String toString()
