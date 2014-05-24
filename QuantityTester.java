@@ -26,6 +26,16 @@ public class QuantityTester extends TestCase{
 		assertTrue(toCheck.contains("-9.8 m s^-2"));
 	}
 
+	public void testCopy(){
+		Quantity accelCopy = new Quantity(accel);
+		assertEquals(accel, accelCopy);
+	}
+
+	public void testNoArg(){
+		Quantity simple = new Quantity();
+		assertEquals(new Quantity(1, empty(), empty()), simple);
+	}
+
 	public void testEquals(){
 		Quantity toCompare = new Quantity(9.8, Arrays.asList("m"),
 												 Arrays.asList("s", "s"));
@@ -48,10 +58,13 @@ public class QuantityTester extends TestCase{
 		Quantity accelCopy = new Quantity(accel);
 		Quantity secCopy = new Quantity(oneSec);
 		Quantity jerk = accel.div(oneSec);
+		Quantity currentCopy = new Quantity(current);
 		assertEquals(new Quantity(-9.8, Arrays.asList("m"),
 									 Arrays.asList("s", "s", "s")), jerk);
 		assertEquals(accelCopy, accel);
 		assertEquals(secCopy, oneSec);
+		Quantity one = current.div(currentCopy);
+		assertEquals(new Quantity(1.0, empty(), empty()), one);
 
 	}
 
@@ -98,6 +111,7 @@ public class QuantityTester extends TestCase{
 			//pass
 		}
 	}
+	
 
 	public void testNegate(){
 		Quantity negated = accel.negate();
@@ -129,6 +143,14 @@ public class QuantityTester extends TestCase{
 		Quantity kph = new Quantity(60, Arrays.asList("kph"), empty());
 		toCompare = new Quantity(999.99996, Arrays.asList("m"), Arrays.asList("min"));
 		assertEquals(kph.normalize(db), toCompare.normalize(db));
+	}
+
+	public void testHash(){
+		Quantity simple = new Quantity(1, empty(), empty());
+		assertTrue(!(simple.hashCode() == oneSec.hashCode()));
+		assertEquals(accel.hashCode(), new Quantity(accel).hashCode());
+		Quantity diff = new Quantity(-9.7, Arrays.asList("m"), Arrays.asList("s", "s"));
+		assertTrue(accel.hashCode() != diff.hashCode());
 	}
 
 

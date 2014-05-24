@@ -88,6 +88,8 @@ public class Quantity{
 		if (!(toCompare instanceof Quantity)){
 			return false;
 		}
+		if (toCompare == null)
+			throw new NullPointerException();
 		return this.toString().equals(toCompare.toString());
 	}
 
