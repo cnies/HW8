@@ -52,6 +52,7 @@ public class Quantity{
 		 no units
 	 */
 	public Quantity(){
+		this(1.0, empty, empty);
 	}
 
 
