@@ -13,7 +13,7 @@ public class UnicalcTester extends TestCase{
 	private String worksForQ;
 	private String worksForK;
 	private String worksForP;
-	private String worksForE;
+	private String worksForE1 = "5 + 2";
 	private String worksForL1 = "5 ampere";
   private String worksForL2 = "2^2 + 2(6 - 8) + 20";
 	private String worksForS1 = "def zorkmid 5 ampere";
@@ -77,6 +77,27 @@ public class UnicalcTester extends TestCase{
     assertEquals("Normalize(Product(Product(Value(50.0),Value(1.0 ampere))," +
                  "Product(Value(120.0),Value(1.0 second))))",
                  treeGenerated.toString());
+  }
+
+  public void testESimple()
+  {
+    calculator.tokenize(worksForE1);
+    AST treeGenerated = calculator.E();
+    assertEquals("Sum(Value(5.0),Value(2.0))", treeGenerated.toString());
+  }
+
+  public void testEComplex()
+  {
+    calculator.tokenize(worksForS2);
+    AST treeGenerated = calculator.E();
+    assertEquals("Sum(Value(5.0),Sum(Product(Value(8.0),Value(3.0)),Difference("+
+                "Value(3.0),Value(0.0))))", treeGenerated.toString());
+    
+    calculator.tokenize(worksForL2);
+    treeGenerated = calculator.E();
+    assertEquals("Sum(Power(Value(2.0),2),Sum(Product(Value(2.0)," + 
+                  "Difference(Value(6.0),Value(8.0))),Value(20.0)))",
+                  treeGenerated.toString());
   }
 
 }
