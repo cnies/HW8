@@ -12,7 +12,8 @@ public class UnicalcTester extends TestCase{
 	private String worksForR;
 	private String worksForQ;
 	private String worksForK;
-	private String worksForP;
+	private String worksForP1 = "2*(4 + 5)";
+  private String worksForP2 = "2/(4*3)";
 	private String worksForE1 = "5 + 2";
 	private String worksForL1 = "5 ampere";
   private String worksForL2 = "2^2 + 2(6 - 8) + 20";
@@ -100,4 +101,19 @@ public class UnicalcTester extends TestCase{
                   treeGenerated.toString());
   }
 
+  public void testPProduct()
+  {
+    calculator.tokenize(worksForP1);
+    AST treeGenerated = calculator.P();
+    assertEquals("Product(Value(2.0),Sum(Value(4.0),Value(5.0)))",
+                  treeGenerated.toString());
+  }
+
+  public void testPDivision()
+  {
+    calculator.tokenize(worksForP2);
+    AST treeGenerated = calculator.P();
+    assertEquals("Quotient(Value(2.0),Product(Value(4.0),Value(3.0)))",
+                  treeGenerated.toString());
+  }
 }
