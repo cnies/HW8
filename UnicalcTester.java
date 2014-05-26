@@ -14,7 +14,8 @@ public class UnicalcTester extends TestCase{
 	private String worksForK;
 	private String worksForP;
 	private String worksForE;
-	private String worksForL;
+	private String worksForL1 = "5 ampere";
+  private String worksForL2 = "2^2 + 2(6 - 8) + 20";
 	private String worksForS1 = "def zorkmid 5 ampere";
   private String worksForS2 = "5 + 8*3 + 3 - 0";
   private String worksForS3 = "# 50 ampere * 120 second";
@@ -52,4 +53,30 @@ public class UnicalcTester extends TestCase{
                  "Product(Value(120.0),Value(1.0 second))))", 
                  treeGenerated.toString());
   }
+
+  public void testLDefition()
+  {
+    calculator.tokenize(worksForL1);
+    AST treeGenerated = calculator.L();
+    assertEquals("Product(Value(5.0),Value(1.0 ampere))", treeGenerated.toString());
+  }
+
+  public void testLEquation()
+  {
+    calculator.tokenize(worksForL2);
+    AST treeGenerated = calculator.L();
+    assertEquals("Sum(Power(Value(2.0),2),Sum(Product(Value(2.0)," + 
+                  "Difference(Value(6.0),Value(8.0))),Value(20.0)))",
+                  treeGenerated.toString());
+  }
+
+  public void testLNormalize()
+  {
+    calculator.tokenize(worksForS3);
+    AST treeGenerated = calculator.L();
+    assertEquals("Normalize(Product(Product(Value(50.0),Value(1.0 ampere))," +
+                 "Product(Value(120.0),Value(1.0 second))))",
+                 treeGenerated.toString());
+  }
+
 }
