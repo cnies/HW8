@@ -11,7 +11,8 @@ public class UnicalcTester extends TestCase{
   private Unicalc calculator;
 	private String worksForR;
 	private String worksForQ;
-	private String worksForK;
+	private String worksForK1 = "-5";
+  private String worksForK2 = "--(5*9*(0 + 3)^2)";
 	private String worksForP1 = "2*(4 + 5)";
   private String worksForP2 = "2/(4*3)";
 	private String worksForE1 = "5 + 2";
@@ -115,5 +116,18 @@ public class UnicalcTester extends TestCase{
     AST treeGenerated = calculator.P();
     assertEquals("Quotient(Value(2.0),Product(Value(4.0),Value(3.0)))",
                   treeGenerated.toString());
+  }
+
+  public void testKNegation()
+  {
+    calculator.tokenize(worksForK1);
+    AST treeGenerated = calculator.K();
+    assertEquals("Negation(Value(5.0))", treeGenerated.toString());
+
+    calculator.tokenize(worksForK2);
+    treeGenerated = calculator.K();
+    assertEquals("Negation(Negation(Product(Value(5.0),Product(Value(9.0)," +
+                "Power(Sum(Value(0.0),Value(3.0)),2)))))",
+                treeGenerated.toString());
   }
 }
