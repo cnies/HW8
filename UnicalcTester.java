@@ -10,7 +10,9 @@ public class UnicalcTester extends TestCase{
 	private static final Tokenizer tok = new Tokenizer();
   private Unicalc calculator;
 	private String worksForR;
-	private String worksForQ;
+	private String worksForQ1 = "zorkmid";
+  private String worksForQ2 = "12345";
+  private String worksForQ3 = worksForQ2 + worksForQ1;
 	private String worksForK1 = "-5";
   private String worksForK2 = "--(5*9*(0 + 3)^2)";
 	private String worksForP1 = "2*(4 + 5)";
@@ -129,5 +131,27 @@ public class UnicalcTester extends TestCase{
     assertEquals("Negation(Negation(Product(Value(5.0),Product(Value(9.0)," +
                 "Power(Sum(Value(0.0),Value(3.0)),2)))))",
                 treeGenerated.toString());
+  }
+
+  public void testQWord()
+  {
+    calculator.tokenize(worksForQ1);
+    AST treeGenerated = calculator.Q();
+    assertEquals("Value(1.0 zorkmid)", treeGenerated.toString());
+  }
+
+  public void testQNumber()
+  {
+    calculator.tokenize(worksForQ2);
+    AST treeGenerated = calculator.Q();
+    assertEquals("Value(12345.0)", treeGenerated.toString());
+  }
+
+  public void testQUnit()
+  {
+    calculator.tokenize(worksForQ3);
+    AST treeGenerated = calculator.Q();
+    assertEquals("Product(Value(12345.0),Value(1.0 zorkmid))",
+                  treeGenerated.toString());
   }
 }
