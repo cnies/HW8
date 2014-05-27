@@ -9,7 +9,8 @@ import junit.framework.TestCase;
 public class UnicalcTester extends TestCase{
 	private static final Tokenizer tok = new Tokenizer();
   private Unicalc calculator;
-	private String worksForR;
+	private String worksForR1 = "zorkmid^2";
+  private String worksForR2 = "500";
 	private String worksForQ1 = "zorkmid";
   private String worksForQ2 = "12345";
   private String worksForQ3 = worksForQ2 + worksForQ1;
@@ -153,5 +154,19 @@ public class UnicalcTester extends TestCase{
     AST treeGenerated = calculator.Q();
     assertEquals("Product(Value(12345.0),Value(1.0 zorkmid))",
                   treeGenerated.toString());
+  }
+
+  public void testRUnit()
+  {
+    calculator.tokenize(worksForR1);
+    AST treeGenerated = calculator.R();
+    assertEquals("Power(Value(1.0 zorkmid),2)", treeGenerated.toString());
+  }
+
+  public void testRValue()
+  {
+    calculator.tokenize(worksForR2);
+    AST treeGenerated = calculator.R();
+    assertEquals("Value(500.0)", treeGenerated.toString());
   }
 }
