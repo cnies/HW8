@@ -213,11 +213,7 @@ class Unicalc
 
     AST right = Q();
 
-    return new Product(left, right);  // I don't think I should *always* do this
-               //   (e.g., if I peek and the R is followed
-               //    by a number, word, or left parenthesis,
-               //    I should try to recurively grab at least
-               //    one more R via Q...)
+    return new Product(left, right);
 
   }
 

@@ -136,6 +136,9 @@ public class Quantity{
 		 Raise this Quantity to an integer power
 	 */
 	public Quantity pow(int exponent){
+    if (exponent == 0){
+      return new Quantity();
+    }
 		Quantity toReturn = new Quantity(this);
 		toReturn.quantity = java.lang.Math.pow(quantity, (double) exponent);
 		for (String unit: toReturn.theUnits.keySet()){
