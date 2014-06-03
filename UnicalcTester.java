@@ -59,6 +59,20 @@ public class UnicalcTester extends TestCase{
                  treeGenerated.toString());
   }
 
+  public void testSError()
+  {
+    calculator.tokenize("def # 1 ohm");
+    try
+    {
+      AST treeGenerated = calculator.S();
+      fail("Managed to redefine # as a unit.");
+    }
+    catch (ParseError e)
+    {
+      //Should happen!
+    }
+  }
+
   public void testLDefition()
   {
     calculator.tokenize(worksForL1);
