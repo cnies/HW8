@@ -6,6 +6,14 @@
 
 // Extended by:
 
+/*
+  CSE 12 Homework 8
+  Christopher Nies and Hasan Abu-Amara
+  A11393577 and A11347379
+  Section B00 and Section B00
+  May 22nd, 2014
+ */
+
 import java.util.*;        // Scanner, LinkedList, ...
 import java.util.regex.*;  // Pattern, Matcher, ...
 
