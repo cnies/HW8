@@ -174,7 +174,7 @@ class Unicalc
       return new Negation(K());
     }
 
-    return Q();  // I don't think we should *always* do this
+    return Q();
   }
 
   // private method isNumber

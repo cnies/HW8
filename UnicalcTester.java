@@ -24,6 +24,9 @@ public class UnicalcTester extends TestCase{
 	private String worksForS1 = "def zorkmid 5 ampere";
   private String worksForS2 = "5 + 8*3 + 3 - 0";
   private String worksForS3 = "# 50 ampere * 120 second";
+  private String error1 = "5^(6*7+-5)";
+  private String error2 = "def # 1 ohm";
+  private String error3 = "7*8 +";
 
 	protected void setUp(){
     calculator = new Unicalc();
@@ -32,6 +35,34 @@ public class UnicalcTester extends TestCase{
   protected void tearDown()
   {
     calculator = null;
+  }
+
+  public void testSError1()
+  {
+    calculator.tokenize(error1);
+    try
+    {
+      AST treeGenerated = calculator.S();
+      fail("We made an AST tree of something that should be an error.");
+    }
+    catch (ParseError e)
+    {
+      //Should happen!
+    }
+  }
+
+  public void testSError3()
+  {
+    calculator.tokenize(error3);
+    try
+    {
+      AST treeGenerated = calculator.S();
+      fail("We made an AST of something that is incomplete");
+    }
+    catch (ParseError e)
+    {
+      //Should happen!
+    }
   }
 
 	public void testSDefinition()
@@ -59,9 +90,9 @@ public class UnicalcTester extends TestCase{
                  treeGenerated.toString());
   }
 
-  public void testSError()
+  public void testSError2()
   {
-    calculator.tokenize("def # 1 ohm");
+    calculator.tokenize(error2);
     try
     {
       AST treeGenerated = calculator.S();
