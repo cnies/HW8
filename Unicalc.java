@@ -73,6 +73,10 @@ class Unicalc
     if("def".equals(toks.peek()))
     {
       toks.pop();
+      if (!isAlphabetic(toks.peek()))
+      {
+        throw new ParseError("Error: definition of new units must be a word.");
+      }
       String newUnit = toks.pop();
       l = L();
       return new Define(newUnit, l);
